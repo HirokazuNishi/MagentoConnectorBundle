@@ -22,7 +22,8 @@ abstract class AbstractNormalizer implements NormalizerInterface
     const MAGENTO_GROUPED_PRODUCT_KEY      = 'grouped';
     const DATE_FORMAT                      = 'Y-m-d H:i:s';
 
-    const MAGENTO_FORMAT = 'MagentoArray';
+    const MAGENTO_FORMAT     = 'MagentoArray';
+    const MAGENTO_CSV_FORMAT = 'MagentoCsv';
 
     /**
      * @var array
@@ -32,7 +33,7 @@ abstract class AbstractNormalizer implements NormalizerInterface
     /**
      * @var array
      */
-    protected $supportedFormats = [self::MAGENTO_FORMAT];
+    protected $supportedFormats = [self::MAGENTO_FORMAT, self::MAGENTO_CSV_FORMAT];
 
     /**
      * @var ChannelManager

@@ -1,5 +1,6 @@
 parameters:
     pim_magento_connector.writer.product.class: Pim\Bundle\MagentoConnectorBundle\Writer\ProductWriter
+    pim_magento_connector.writer.product_to_api_import.class: Pim\Bundle\MagentoConnectorBundle\Writer\ProductToApiImportWriter
     pim_magento_connector.writer.product_delta.class: Pim\Bundle\MagentoConnectorBundle\Writer\DeltaProductWriter
     pim_magento_connector.writer.category.class: Pim\Bundle\MagentoConnectorBundle\Writer\CategoryWriter
     pim_magento_connector.writer.product_association.class: Pim\Bundle\MagentoConnectorBundle\Writer\ProductAssociationWriter
@@ -14,6 +15,11 @@ services:
         arguments:
             - '@pim_magento_connector.guesser.magento_webservice'
             - '@pim_catalog.manager.channel'
+            - '@pim_magento_connector.webservice.magento_soap_client_parameters_registry'
+    pim_magento_connector.writer.product_to_api_import:
+        class: %pim_magento_connector.writer.product_to_api_import.class%
+        arguments:
+            - '@pim_magento_connector.guesser.magento_webservice'
             - '@pim_magento_connector.webservice.magento_soap_client_parameters_registry'
     pim_magento_connector.writer.product_delta:
         class: %pim_magento_connector.writer.product_delta.class%

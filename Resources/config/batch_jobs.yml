@@ -1,6 +1,21 @@
 connector:
     name: Magento Connector
     jobs:
+        fast_magento_product_export:
+            title: pim_magento_connector.jobs.fast_product_export.title
+            type:  export
+            templates:
+                show: 'PimMagentoConnectorBundle:Export:show.html.twig'
+                edit: 'PimMagentoConnectorBundle:Export:edit.html.twig'
+            steps:
+                export_simple_products:
+                    title:     pim_magento_connector.steps.fast_simple_product_export.export.title
+                    services:
+                        reader:    pim_base_connector.reader.doctrine.product
+                        processor: pim_magento_connector.processor.product_to_magento_csv
+                        writer:    pim_magento_connector.writer.product_to_api_import
+                    parameters:
+                        batch_size: 1
         magento_product_export:
             title: pim_magento_connector.jobs.product_export.title
             type:  export

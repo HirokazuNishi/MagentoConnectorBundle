@@ -20,6 +20,7 @@ use Pim\Bundle\MagentoConnectorBundle\Normalizer\CategoryNormalizer;
 use Pim\Bundle\MagentoConnectorBundle\Normalizer\FamilyNormalizer;
 use Pim\Bundle\MagentoConnectorBundle\Normalizer\OptionNormalizer;
 use Pim\Bundle\MagentoConnectorBundle\Normalizer\AttributeNormalizer;
+use Pim\Bundle\MagentoConnectorBundle\Normalizer\ProductMagentoCsvNormalizer;
 
 /**
  * A magento guesser to get the proper normalizer
@@ -261,6 +262,26 @@ class NormalizerGuesser extends AbstractGuesser
                 return new FamilyNormalizer();
             default:
                 throw new NotSupportedVersionException(AbstractGuesser::MAGENTO_VERSION_NOT_SUPPORTED_MESSAGE);
+        }
+    }
+
+    /**
+     * Checks if ApiImport is in Magento and if user has role access
+     *
+     * @param MagentoSoapClientParameters $clientParameters
+     *
+     * @throws ApiImportNotSupportedException
+     *
+     */
+    public function getProductMagentoCsvNormalizer(MagentoSoapClientParameters $clientParameters)
+    {
+        $client = $this->magentoSoapClientFactory->getMagentoSoapClient($clientParameters);
+        $apiImportStatus = $this->getApiImportStatus($client);
+
+        if ($apiImportStatus['isEnable']) {
+            return new ProductMagentoCsvNormalizer($this->channelManager);
+        } else {
+            throw new ApiImportNotSupportedException($apiImportStatus['message']);
         }
     }
 }

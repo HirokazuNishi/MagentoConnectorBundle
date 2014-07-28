@@ -19,7 +19,8 @@ class MagentoSoapClientParametersRegistry
     /**
      * Gives MagentoSoapClientParameters which corresponding to given parameters
      *
-     * @param  array                       $soapParameters Associative array which contains soap parameters
+     * @param array $soapParameters Associative array which contains soap parameters
+     *
      * @return MagentoSoapClientParameters
      */
     public function getInstance(

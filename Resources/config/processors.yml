@@ -1,5 +1,6 @@
 parameters:
     pim_magento_connector.processor.product.class: Pim\Bundle\MagentoConnectorBundle\Processor\ProductProcessor
+    pim_magento_connector.processor.product_to_magento_csv.class: Pim\Bundle\MagentoConnectorBundle\Processor\ProductToMagentoCsvProcessor
     pim_magento_connector.processor.configurable.class: Pim\Bundle\MagentoConnectorBundle\Processor\ConfigurableProcessor
     pim_magento_connector.processor.product_association.class: Pim\Bundle\MagentoConnectorBundle\Processor\ProductAssociationProcessor
     pim_magento_connector.processor.category.class: Pim\Bundle\MagentoConnectorBundle\Processor\CategoryProcessor
@@ -24,6 +25,17 @@ services:
             - '@pim_magento_connector.manager.association_type'
             - '@pim_magento_connector.webservice.magento_soap_client_parameters_registry'
             - '@pim_magento_connector.manager.attribute'
+
+    pim_magento_connector.processor.product_to_magento_csv:
+        class: %pim_magento_connector.processor.product_to_magento_csv.class%
+        arguments:
+            - '@pim_magento_connector.guesser.magento_webservice'
+            - '@pim_magento_connector.guesser.magento_normalizer'
+            - '@pim_magento_connector.manager.locale'
+            - '@pim_magento_connector.merger.storeview_mapping'
+            - '@pim_magento_connector.webservice.magento_soap_client_parameters_registry'
+            - '@pim_magento_connector.manager.attribute'
+            - '@pim_magento_connector.manager.association_type'
 
     pim_magento_connector.processor.configurable:
         class: %pim_magento_connector.processor.configurable.class%

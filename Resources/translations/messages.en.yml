@@ -7,8 +7,10 @@ pim_magento_connector:
         attribute_export.title: Export attributes to Magento
         attributeset_export.title: Export families to Magento
         full_export.title: Full export (without products) to Magento
+        fast_product_export.title: Fast product export to Magento
     steps:
         simple_product_export.export.title: Simple product export
+        fast_simple_product_export.export.title: Fast simple product export
         configurable_product_export.export.title: Configurable product export
         association_product_export.export.title: Product association export
         simple_product_clean.clean.title: Simple product clean

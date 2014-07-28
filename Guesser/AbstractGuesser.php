@@ -64,4 +64,39 @@ abstract class AbstractGuesser
 
         return $this->version;
     }
+
+    /**
+     * Give the status of ApiImport in Magento.
+     *
+     * @param MagentoSoapClient $client
+     *
+     * @return array
+     */
+    protected function getApiImportStatus(MagentoSoapClient $client = null)
+    {
+        if (null === $client) {
+            return null;
+        }
+
+        try {
+            $client->call('import.importEntities', array([], 'catalog_product'));
+        } catch (Exception $e) {
+            $result = $e->getMessage();
+        }
+
+        if (stripos($result, 'access denied')) {
+            $status['isEnable'] = false;
+            $status['message']  = 'Access denied';
+        } else if (stripos($result, 'invalid entity model')) {
+            // We don't send entity, so invalid entity model message
+            // mean you can access to api import but data are invalid
+            $status['isEnable'] = true;
+            $status['message']  = 'OK';
+        } else {
+            $status['isEnable'] = false;
+            $status['message']  = $result;
+        }
+
+        return $status;
+    }
 }
